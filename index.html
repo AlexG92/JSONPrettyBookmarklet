@@ -1,0 +1,76 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css"></link>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		//Start Development Here
+
+
+
+	var regularExpression = /{\D*}/g;
+	var bodyContent = $('body').html();
+	var regularExpressionResults;
+	var regularExpressionResultsCleaned;
+	while ((regularExpressionResults = regularExpression.exec(bodyContent)) !== null)
+	{
+	  var msg = "Found " + regularExpressionResults[0] + ".  ";
+	  msg += "Next match starts at " + regularExpression.lastIndex;
+	  //console.log(msg);
+	  regularExpressionResultsCleaned = regularExpressionResults[0]
+	}
+	
+	readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned)
+
+	var tableHTML = $(document.createElement('table')).attr({
+		class: "table table-bordered table-striped"	,
+		cellPadding: 5,
+		cellSpacing: 5,
+		id: 'tableToLoadJSONReable',
+	})
+
+	for(key in readyJSONToDisplay) {
+		var tableRow = $(document.createElement('tr'))
+		tableRow.append('<td>' + key + '</td>')
+		tableRow.append('<td>' + String(readyJSONToDisplay[key])+ '</td>')
+		tableHTML.append(tableRow)
+	}
+
+	console.log(tableHTML)
+	
+	$('body').append(tableHTML)
+
+
+	});
+	</script>
+</head>
+
+<body>
+
+<table class="table table-bordered table-striped">
+<tr>
+	<td>Hello</td>
+	<td>Wooo</td>
+</tr>
+<tr>
+	<td>Hello</td>
+	<td>Wooo</td>
+</tr>
+<tr>
+	<td>Hello</td>
+	<td>Wooo</td>
+</tr>
+<tr>
+	<td>Hello</td>
+	<td>Diff</td>
+</tr>
+</table>
+
+<div>
+	{"driving":"car", "flying": ["plane", "helicopter"], "floating": {"boat": "yes", "jetski": "yes", "bicycle":"no"}, "pedaling" : "bicycle"}
+</div>
+
+</body>
+
+</html>
