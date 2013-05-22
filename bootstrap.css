@@ -6166,9 +6166,8 @@ a.badge:focus {
   position: fixed;
 }
 
-/**
-.table-bordered th,
-.table-bordered td  {
-  border-left: 1px solid #dddddd;
+
+.table-bordered th table td:first-child,
+.table-bordered td table td:first-child  {
+  border-left: 0 !important;
 }
-**/
