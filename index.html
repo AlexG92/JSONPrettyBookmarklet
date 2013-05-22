@@ -27,18 +27,48 @@
 		class: "table table-bordered table-striped"	,
 		cellPadding: 5,
 		cellSpacing: 5,
-		id: 'tableToLoadJSONReable',
 	})
 
 	for(key in readyJSONToDisplay) {
 		var tableRow = $(document.createElement('tr'))
-		tableRow.append('<td>' + key + '</td>')
-		tableRow.append('<td>' + String(readyJSONToDisplay[key])+ '</td>')
 		tableHTML.append(tableRow)
+		tableRow.append('<td>' + key + '</td>')
+		
+		console.log(typeof readyJSONToDisplay[key])
+		
+		if ($(readyJSONToDisplay[key]).is(Object)) {			
+			var containerTD = $(document.createElement('td'))
+			var innerTable = $(document.createElement('table'))
+			
+			
+
+			tableRow.append(containerTD)
+			containerTD.append(innerTable)
+			
+			loopThroughIterable(readyJSONToDisplay[key])
+
+			function loopThroughIterable (nonStringValue) {
+				for(innerkey in nonStringValue) {
+					var innerTableRow = $(document.createElement('tr'))
+					innerTable.append(innerTableRow)
+					innerTableRow.append('<td>' + innerkey + '</td>')
+					innerTableRow.append('<td>' + String(readyJSONToDisplay[key][innerkey])+ '</td>')			
+				}				
+
+			}
+
+
+
+			//tableHTML.append(innerTable)
+
+		} else {
+			tableRow.append('<td>' + String(readyJSONToDisplay[key])+ '</td>')
+		}		
+		
+		//console.log($(readyJSONToDisplay[key]))
+		
 	}
 
-	console.log(tableHTML)
-	
 	$('body').append(tableHTML)
 
 
