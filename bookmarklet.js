@@ -2,7 +2,7 @@
 
 if (!($ = window.jQuery)) { 
     script = document.createElement('script');  
-  script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js';   
+	script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js';   
     script.onload=kickOffThePrettyJSON;
     document.body.appendChild(script);  
 }   
@@ -22,7 +22,7 @@ function bringInTheTableCSS() {
 		type: 'text/css',
 		href:'https://raw.github.com/AlexG92/JSONPrettyBookmarklet/master/bootstraptable.css'
 	});
-	$('body').append(externalLinkForTable);	
+	$('body').append(externalLinkForTable);
 }
 
 
@@ -40,7 +40,7 @@ function prettyTheJSON() {
 	}
 	
 	readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned);
-	console.log(readyJSONToDisplay);
+	
 	
 
 	var tableHTML = $(document.createElement('table')).attr({
@@ -49,8 +49,8 @@ function prettyTheJSON() {
 		cellSpacing: 5,
 	});
 
-	for(var key in readyJSONToDisplay) {		
-		
+	for(var key in readyJSONToDisplay) {
+
 		var tableRow = $(document.createElement('tr'));
 		tableHTML.append(tableRow);
 		tableRow.append('<td>' + key + '</td>');
@@ -80,7 +80,6 @@ function prettyTheJSON() {
 					innerTable.append(innerTableRow);
 					innerTableRow.append('<td>' + innerkey + '</td>');
 					if($(nonStringValue[innerkey]).is(Object)){
-						console.log(readyJSONToDisplay[key]);
 						loopThroughIterable(nonStringValue[innerkey], calledAmount += 1, innerTableRow);
 					} else {
 						innerTableRow.append('<td>' + String(nonStringValue[innerkey])+ '</td>');
@@ -93,9 +92,7 @@ function prettyTheJSON() {
 
 
 		} else {
-			
-			var valueOfKey = String(readyJSONToDisplay[key]);
-			tableRow.append('<td>' + valueOfKey + '</td>');
+			tableRow.append('<td>' + String(readyJSONToDisplay[key]) + '</td>');
 		}		
 		
 		
