@@ -1,4 +1,4 @@
-(function(){
+javascript:(function(){
 
 if (!($ = window.jQuery)) { 
     script = document.createElement('script');  
