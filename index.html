@@ -5,7 +5,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		//Start Development Here
+		
 
 
 
@@ -15,61 +15,65 @@
 	var regularExpressionResultsCleaned;
 	while ((regularExpressionResults = regularExpression.exec(bodyContent)) !== null)
 	{
-	  var msg = "Found " + regularExpressionResults[0] + ".  ";
-	  msg += "Next match starts at " + regularExpression.lastIndex;
-	  //console.log(msg);
-	  regularExpressionResultsCleaned = regularExpressionResults[0]
+	  regularExpressionResultsCleaned = regularExpressionResults[0];
 	}
 	
-	readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned)
+	var readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned);
 
 	var tableHTML = $(document.createElement('table')).attr({
 		class: "table table-bordered table-striped"	,
 		cellPadding: 5,
 		cellSpacing: 5,
-	})
+	});
 
 	for(key in readyJSONToDisplay) {
-		var tableRow = $(document.createElement('tr'))
-		tableHTML.append(tableRow)
-		tableRow.append('<td>' + key + '</td>')
+		var tableRow = $(document.createElement('tr'));
+		tableHTML.append(tableRow);
+		tableRow.append('<td>' + key + '</td>');
 		
-		console.log(typeof readyJSONToDisplay[key])
+		
 		
 		if ($(readyJSONToDisplay[key]).is(Object)) {			
-			var containerTD = $(document.createElement('td'))
-			var innerTable = $(document.createElement('table'))
-			
-			
 
-			tableRow.append(containerTD)
-			containerTD.append(innerTable)
 			
-			loopThroughIterable(readyJSONToDisplay[key])
+			loopThroughIterable(readyJSONToDisplay[key], 1);
 
-			function loopThroughIterable (nonStringValue) {
+			function loopThroughIterable (nonStringValue, calledAmount, rowToAttach) {
+				var containerTD = $(document.createElement('td'));
+				var innerTable = $(document.createElement('table'));
+				
+				
+				if (calledAmount == 1) {
+					tableRow.append(containerTD);
+				} else {
+					rowToAttach.append(containerTD);
+				}
+				
+				containerTD.append(innerTable);
+
 				for(innerkey in nonStringValue) {
-					var innerTableRow = $(document.createElement('tr'))
-					innerTable.append(innerTableRow)
-					innerTableRow.append('<td>' + innerkey + '</td>')
-					innerTableRow.append('<td>' + String(readyJSONToDisplay[key][innerkey])+ '</td>')			
+					var innerTableRow = $(document.createElement('tr'));
+					innerTable.append(innerTableRow);
+					innerTableRow.append('<td>' + innerkey + '</td>');
+					if($(nonStringValue[innerkey]).is(Object)){
+						loopThroughIterable(nonStringValue[innerkey], calledAmount += 1, innerTableRow);
+					} else {
+						innerTableRow.append('<td>' + String(nonStringValue[innerkey])+ '</td>');
+					}
 				}				
 
 			}
 
 
 
-			//tableHTML.append(innerTable)
-
 		} else {
-			tableRow.append('<td>' + String(readyJSONToDisplay[key])+ '</td>')
+			tableRow.append('<td>' + String(readyJSONToDisplay[key])+ '</td>');
 		}		
 		
-		//console.log($(readyJSONToDisplay[key]))
 		
 	}
 
-	$('body').append(tableHTML)
+	$('body').append(tableHTML);
 
 
 	});
@@ -78,27 +82,10 @@
 
 <body>
 
-<table class="table table-bordered table-striped">
-<tr>
-	<td>Hello</td>
-	<td>Wooo</td>
-</tr>
-<tr>
-	<td>Hello</td>
-	<td>Wooo</td>
-</tr>
-<tr>
-	<td>Hello</td>
-	<td>Wooo</td>
-</tr>
-<tr>
-	<td>Hello</td>
-	<td>Diff</td>
-</tr>
-</table>
+
 
 <div>
-	{"driving":"car", "flying": ["plane", "helicopter"], "floating": {"boat": "yes", "jetski": "yes", "bicycle":"no"}, "pedaling" : "bicycle"}
+	{"driving":"car", "flying": ["plane", "helicopter", {"driving":"car"}, ["stealth plane", "loud plane"]], "floating": {"boat": "yes", "jetski": "yes", "bicycle":{"waterbicycle":"yes", "snowbicycle": "no", "sandbicycle":{"special":"yes","normal":"no"}}}, "pedaling" : "bike"}
 </div>
 
 </body>
