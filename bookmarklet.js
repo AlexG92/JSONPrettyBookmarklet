@@ -53,9 +53,10 @@ function prettyTheJSON() {
 		tableHTML.append(tableRow);
 		tableRow.append('<td>' + String(key) + '</td>');
 		
+
 		
 		
-		if ($(readyJSONToDisplay[key]).is(Object) && !$.isNumeric(readyJSONToDisplay[key])) {
+		if ( (typeof readyJSONToDisplay[key] == 'object') && !$.isNumeric(readyJSONToDisplay[key])) {
 
 			
 			loopThroughIterable(readyJSONToDisplay[key], 1);
@@ -77,7 +78,9 @@ function prettyTheJSON() {
 					var innerTableRow = $(document.createElement('tr'));
 					innerTable.append(innerTableRow);
 					innerTableRow.append('<td>' + String(innerkey) + '</td>');
-					if($(nonStringValue[innerkey]).is(Object)){
+					console.log((typeof nonStringValue[innerkey] == 'object'));
+					console.log(nonStringValue[innerkey]);
+					if((typeof nonStringValue[innerkey] == 'object')){
 						loopThroughIterable(nonStringValue[innerkey], calledAmount += 1, innerTableRow);
 					} else {
 						innerTableRow.append('<td>' + String(nonStringValue[innerkey])+ '</td>');
@@ -88,7 +91,6 @@ function prettyTheJSON() {
 			}
 
 		} else {
-			console.log(readyJSONToDisplay[key]);
 			tableRow.append('<td>' + String(readyJSONToDisplay[key]) + '</td>');
 		}		
 		
