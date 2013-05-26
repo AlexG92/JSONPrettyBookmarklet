@@ -1,3 +1,10 @@
+table {
+  max-width: 100%;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 .table-bordered th table td:first-child,
 .table-bordered td table td:first-child  {
   border-left: 0 !important;
