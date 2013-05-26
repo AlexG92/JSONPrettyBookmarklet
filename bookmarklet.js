@@ -35,13 +35,11 @@ function prettyTheJSON() {
 	while ((regularExpressionResults = regularExpression.exec(bodyContent)) !== null)
 	{
 
-	  regularExpressionResultsCleaned = regularExpressionResults[0]; 
+	  regularExpressionResultsCleaned = regularExpressionResults[0];
 	  
 	}
 	
-	readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned);
-	
-	
+	readyJSONToDisplay = $.parseJSON(regularExpressionResultsCleaned);	
 
 	var tableHTML = $(document.createElement('table')).attr({
 		class: "table table-bordered table-striped",
@@ -53,11 +51,11 @@ function prettyTheJSON() {
 
 		var tableRow = $(document.createElement('tr'));
 		tableHTML.append(tableRow);
-		tableRow.append('<td>' + key + '</td>');
+		tableRow.append('<td>' + String(key) + '</td>');
 		
 		
 		
-		if ($(readyJSONToDisplay[key]).is(Object)) {			
+		if ($(readyJSONToDisplay[key]).is(Object) && !$.isNumeric(readyJSONToDisplay[key])) {
 
 			
 			loopThroughIterable(readyJSONToDisplay[key], 1);
@@ -78,7 +76,7 @@ function prettyTheJSON() {
 				for(var innerkey in nonStringValue) {
 					var innerTableRow = $(document.createElement('tr'));
 					innerTable.append(innerTableRow);
-					innerTableRow.append('<td>' + innerkey + '</td>');
+					innerTableRow.append('<td>' + String(innerkey) + '</td>');
 					if($(nonStringValue[innerkey]).is(Object)){
 						loopThroughIterable(nonStringValue[innerkey], calledAmount += 1, innerTableRow);
 					} else {
@@ -89,9 +87,8 @@ function prettyTheJSON() {
 			
 			}
 
-
-
 		} else {
+			console.log(readyJSONToDisplay[key]);
 			tableRow.append('<td>' + String(readyJSONToDisplay[key]) + '</td>');
 		}		
 		
